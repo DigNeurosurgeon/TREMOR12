@@ -26,7 +26,8 @@ class InfoViewController: UIViewController {
                 "<li>Linda Ackermans, MD, PhD</li>" +
                 "<li>Pieter Kubben, MD, PhD</li>" +
                 "<li>Mark Kuijf, MD, PhD</li>" +
-                "<li>Maaike Oosterloo, MD, PhD</li>" +
+                "<li>Maayke Oosterloo, MD, PhD</li>" +
+                "<li>Albert Leentjens, MD, PhD</li>" +
                 "<li>Annelien Duits, PhD</li>" +
                 "<li>Nicole Bakker</li>" +
                 // "<li></li>" +
@@ -35,7 +36,6 @@ class InfoViewController: UIViewController {
             "<h3>Design &amp; development</h3>" +
             "<ul>" +
                 "<li>Pieter Kubben, MD, PhD</li>" +
-                "<li>Jos Adam, PhD</li>" +
             "</ul>" +
             
             "<h3>Contact</h3>" +

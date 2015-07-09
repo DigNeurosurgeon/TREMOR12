@@ -167,6 +167,7 @@
 				TargetAttributes = {
 					F5F13C0D1B19D2BE009460C1 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = XJW89ZK9NM;
 					};
 					F5F13C221B19D2BE009460C1 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -340,7 +341,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TREMOR12/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -350,7 +353,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TREMOR12/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -409,6 +414,7 @@
 				F5F13C2F1B19D2BE009460C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F5F13C301B19D2BE009460C1 /* Build configuration list for PBXNativeTarget "TREMOR12Tests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +423,7 @@
 				F5F13C321B19D2BE009460C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

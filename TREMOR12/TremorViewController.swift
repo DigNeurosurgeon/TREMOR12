@@ -20,9 +20,10 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
     lazy var tremorSamples = [TremorSample]()
     var timeIntervalAtLastBoot = NSTimeInterval()
     var samplingStarted = false
+    var notificationForResearchOnlyPresented = false
     
     
-    // MARK: - View functions
+    // MARK: - Base functions
     
     
     override func viewDidLoad() {
@@ -39,7 +40,9 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
 
     
     override func viewDidAppear(animated: Bool) {
-        // startMotionManager()
+        if !notificationForResearchOnlyPresented {
+            showNotificationForResearchOnly()
+        }
     }
     
     
@@ -49,9 +52,7 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     
     override func didReceiveMemoryWarning() {
-        // TODO: Memory warning implementation
-        // What to do is memory warning is received? When does that happen?
-        // stopMotionManager()
+        showNotificationAfterRecording("Memory warning", messageText: "Continuing measurements may result in loss of data or crashing the app. What do you want to do?")
     }
     
     
@@ -63,7 +64,9 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
             
             let queue = NSOperationQueue()
             
-            motionManager.startDeviceMotionUpdatesUsingReferenceFrame(CMAttitudeReferenceFrame.XMagneticNorthZVertical, toQueue: queue, withHandler: { (motion: CMDeviceMotion!, error: NSError!) in
+            motionManager.startDeviceMotionUpdatesToQueue(queue, 
+            /*motionManager.startDeviceMotionUpdatesUsingReferenceFrame(CMAttitudeReferenceFrame.XMagneticNorthZVertical, toQueue: queue,*/
+                withHandler: { (motion: CMDeviceMotion!, error: NSError!) in
                     self.collectTremorSamples(motion, error: error)
 
                 // Use code below if interaction with UI is required 
@@ -97,11 +100,11 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
             startStopButton.setTitle("Record", forState: .Normal)
             samplingStarted = false
             recordingIndicator.stopAnimating()
+            showNotificationAfterRecording("Question", messageText: "What do you want to do?")
         }
         
     }
-
-
+    
     
     // MARK: - Tremor samples
     
@@ -147,8 +150,6 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
         
         tremorSamples.append(sample)
         
-        // test github
-        
     }
     
     
@@ -167,7 +168,7 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
     }
     
     
-    // MARK: - Email
+    // MARK: - Export data
     
     
     @IBAction func exportSamples(sender: AnyObject) {
@@ -205,6 +206,46 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    // MARK: - Notifications
+    
+    
+    func showNotificationForResearchOnly() {
+        let warningMessage = "This tool is only meant for research and not for direct patient treatment."
+        let warningController = UIAlertController(title: "Warning", message: warningMessage, preferredStyle: UIAlertControllerStyle.Alert)
+        let confirmAction = UIAlertAction(title: "I understand", style: UIAlertActionStyle.Default, handler: nil)
+        warningController.addAction(confirmAction)
+        presentViewController(warningController, animated: true, completion: nil)
+        
+        notificationForResearchOnlyPresented = true
+    }
+    
+    
+    func showNotificationAfterRecording(titleText: String, messageText: String) {
+        
+        let controller = UIAlertController(title: titleText, message: messageText, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let continueAction = UIAlertAction(title: "Continue measurements", style: UIAlertActionStyle.Default) { (action) -> Void in
+            self.startStopSampling(self)
+        }
+        controller.addAction(continueAction)
+        
+        let exportAction = UIAlertAction(title: "Export data", style: UIAlertActionStyle.Default) { (action) -> Void in
+            self.exportSamples(self)
+        }
+        controller.addAction(exportAction)
+        
+        let deleteAction = UIAlertAction(title: "Delete data", style: UIAlertActionStyle.Destructive) { (action) -> Void in
+            self.resetSamples(self)
+        }
+        controller.addAction(deleteAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+        controller.addAction(cancelAction)
+        
+        presentViewController(controller, animated: true, completion: nil)
     }
     
 }
