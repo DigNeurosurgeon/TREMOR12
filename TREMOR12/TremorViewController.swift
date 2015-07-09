@@ -52,6 +52,7 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     
     override func didReceiveMemoryWarning() {
+        startStopSampling(self)
         showNotificationAfterRecording("Memory warning", messageText: "Continuing measurements may result in loss of data or crashing the app. What do you want to do?")
     }
     
