@@ -180,7 +180,6 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
         }
         
         // Save output to file
-        //let fileManager = NSFileManager.defaultManager()
         let dirPaths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let docsDir = dirPaths[0] 
         let csvFileName = "tremor_samples.csv"
@@ -190,11 +189,6 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
         } catch let error as NSError {
             print("File creation failed with error: \(error.localizedDescription)")
         }
-        /* if csvText.writeToFile(csvFilePath, atomically: true, encoding: NSUTF8StringEncoding) == false {
-        
-        } else {
-            print("File created successfully at \(csvFilePath)")
-        }*/
         
         // Create email form
         let email = MFMailComposeViewController()
