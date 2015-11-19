@@ -35,7 +35,7 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
         timeIntervalAtLastBoot = secondsSinceReferenceDate - secondsSinceLastBoot
         
         // Initialize empty sample
-        let emptySample = TremorSample()
+        _ = TremorSample()
     }
 
     
@@ -67,7 +67,7 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
             
             motionManager.startDeviceMotionUpdatesToQueue(queue, 
             /*motionManager.startDeviceMotionUpdatesUsingReferenceFrame(CMAttitudeReferenceFrame.XMagneticNorthZVertical, toQueue: queue,*/
-                withHandler: { (motion: CMDeviceMotion!, error: NSError!) in
+                withHandler: { (motion: CMDeviceMotion?, error: NSError?) in
                     self.collectTremorSamples(motion, error: error)
 
                 // Use code below if interaction with UI is required 
@@ -79,7 +79,7 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
             })
             
         } else {
-            println("Accelerometer is not available.")
+            print("Accelerometer is not available.")
         }
     }
     
@@ -112,7 +112,7 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
     
     func collectTremorSamples(motion: CMDeviceMotion!, error: NSError!)  {
         if (error != nil) {
-            println(error)
+            print(error)
         }
         
         let attitude: CMAttitude = motion.attitude
@@ -180,32 +180,34 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
         }
         
         // Save output to file
-        let fileManager = NSFileManager.defaultManager()
+        //let fileManager = NSFileManager.defaultManager()
         let dirPaths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let docsDir = dirPaths[0] as! String
+        let docsDir = dirPaths[0] 
         let csvFileName = "tremor_samples.csv"
         let csvFilePath = docsDir.stringByAppendingString("/" + csvFileName)
-        var csvFileCreationError: NSError?
-        if csvText.writeToFile(csvFilePath, atomically: true, encoding: NSUTF8StringEncoding, error: &csvFileCreationError) == false {
-            if let errorMessage = csvFileCreationError {
-                println("File creation failed with error: \(errorMessage)")
-            }
-        } else {
-            println("File created successfully at \(csvFilePath)")
+        do {
+            try csvText.writeToFile(csvFilePath, atomically: true, encoding: NSUTF8StringEncoding)
+        } catch let error as NSError {
+            print("File creation failed with error: \(error.localizedDescription)")
         }
+        /* if csvText.writeToFile(csvFilePath, atomically: true, encoding: NSUTF8StringEncoding) == false {
+        
+        } else {
+            print("File created successfully at \(csvFilePath)")
+        }*/
         
         // Create email form
-        var email = MFMailComposeViewController()
+        let email = MFMailComposeViewController()
         email.mailComposeDelegate = self
         email.setSubject("TREMOR12 samples as CSV file")
         email.setMessageBody("Optional comments: \n\n", isHTML: false)
         let csvData = NSData(contentsOfFile: csvFilePath)
-        email.addAttachmentData(csvData, mimeType: "text/csv", fileName: csvFileName)
+        email.addAttachmentData(csvData!, mimeType: "text/csv", fileName: csvFileName)
         presentViewController(email, animated: true, completion: nil)
     }
     
     
-    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
