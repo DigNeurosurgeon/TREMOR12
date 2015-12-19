@@ -11,7 +11,7 @@ import UIKit
 import CoreMotion
 import MessageUI
 
-class TremorViewController: UIViewController, MFMailComposeViewControllerDelegate {
+class TremorViewController: UIViewController {
     
     @IBOutlet weak var startStopButton: UIButton!
     @IBOutlet weak var recordingIndicator: UIActivityIndicatorView!
@@ -172,37 +172,53 @@ class TremorViewController: UIViewController, MFMailComposeViewControllerDelegat
     // MARK: - Export data
     
     
-    @IBAction func exportSamples(sender: AnyObject) {
-        // Create output
-        var csvText = "timestamp2001_ms,roll,pitch,yaw,rotX,rotY,rotZ,accX,accY,accZ,gravX,gravY,gravZ\n"
+    func csvFileWithPath() -> NSURL? {
+        // Create date string from local timezone for filename
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone()
+        dateFormatter.dateFormat = "YYYY_MM_dd_hhmm"
+        let localDateForFileName = dateFormatter.stringFromDate(date)
+        
+        // Create CSV file with output
+        var csvString = "timestamp2001_ms,roll,pitch,yaw,rotX,rotY,rotZ,accX,accY,accZ,gravX,gravY,gravZ\n"
         for sample in tremorSamples {
-            csvText += sample.exportAsCommaSeparatedValues()
+            csvString += sample.exportAsCommaSeparatedValues()
         }
-        
-        // Save output to file
         let dirPaths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let docsDir = dirPaths[0] 
-        let csvFileName = "tremor_samples.csv"
+        let docsDir = dirPaths[0]
+        let csvFileName = "TREMOR12_samples_\(localDateForFileName).csv"
         let csvFilePath = docsDir.stringByAppendingString("/" + csvFileName)
+        
+        // Generate output
+        var csvURL: NSURL?
         do {
-            try csvText.writeToFile(csvFilePath, atomically: true, encoding: NSUTF8StringEncoding)
-        } catch let error as NSError {
-            print("File creation failed with error: \(error.localizedDescription)")
+            try csvString.writeToFile(csvFilePath, atomically: true, encoding: NSUTF8StringEncoding)
+            csvURL = NSURL(fileURLWithPath: csvFilePath)
+        } catch {
+            csvURL = nil
         }
         
-        // Create email form
-        let email = MFMailComposeViewController()
-        email.mailComposeDelegate = self
-        email.setSubject("TREMOR12 samples as CSV file")
-        email.setMessageBody("Optional comments: \n\n", isHTML: false)
-        let csvData = NSData(contentsOfFile: csvFilePath)
-        email.addAttachmentData(csvData!, mimeType: "text/csv", fileName: csvFileName)
-        presentViewController(email, animated: true, completion: nil)
+        return csvURL
     }
     
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func exportSamples(sender: AnyObject) {
+        // Export content if possible, else show alert
+        if let content = csvFileWithPath() {
+            let activityViewController = UIActivityViewController(activityItems: [content], applicationActivities: nil)
+            if activityViewController.respondsToSelector("popoverPresentationController") {
+                activityViewController.popoverPresentationController?.sourceView = self.view
+                activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+            }
+            presentViewController(activityViewController, animated: true, completion: nil)
+            
+        } else {
+            let alertController = UIAlertController(title: "Error", message: "CSV file could not be created.", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+            alertController.addAction(okAction)
+            presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     
