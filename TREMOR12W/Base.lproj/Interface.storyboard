@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="9515"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="TREMOR12W" customModuleProvider="target">
+                    <items>
+                        <button width="1" alignment="center" verticalAlignment="center" title="Record" id="DFk-Aq-liu">
+                            <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" type="system" pointSize="30"/>
+                            <connections>
+                                <action selector="onRecord" destination="AgC-eL-Hgc" id="fmz-5o-YUW"/>
+                            </connections>
+                        </button>
+                        <label alignment="center" verticalAlignment="bottom" text="statusLabel" id="pa2-96-K8h"/>
+                    </items>
+                    <connections>
+                        <outlet property="recordButton" destination="DFk-Aq-liu" id="CMy-q1-Gbt"/>
+                        <outlet property="statusLabel" destination="pa2-96-K8h" id="a3i-9u-1TR"/>
+                    </connections>
+                </controller>
+            </objects>
+        </scene>
+    </scenes>
+</document>
