@@ -9,9 +9,9 @@
 
 import UIKit
 import CoreMotion
-import MessageUI
+import WatchConnectivity
 
-class TremorViewController: UIViewController {
+class TremorViewController: UIViewController, WCSessionDelegate {
     
     @IBOutlet weak var startStopButton: UIButton!
     @IBOutlet weak var recordingIndicator: UIActivityIndicatorView!
@@ -28,20 +28,18 @@ class TremorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupConnectivity()
         
         // Calculate offset for CMDeviceMotion timestamps
         let secondsSinceReferenceDate = NSDate().timeIntervalSinceReferenceDate
         let secondsSinceLastBoot = NSProcessInfo().systemUptime
         timeIntervalAtLastBoot = secondsSinceReferenceDate - secondsSinceLastBoot
-        
-        // Initialize empty sample
-        _ = TremorSample()
     }
 
     
     override func viewDidAppear(animated: Bool) {
         if !notificationForResearchOnlyPresented {
-            showNotificationForResearchOnly()
+            showAlertForResearchOnly()
         }
     }
     
@@ -53,7 +51,7 @@ class TremorViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         startStopSampling(self)
-        showNotificationAfterRecording("Memory warning", messageText: "Continuing measurements may result in loss of data or crashing the app. What do you want to do?")
+        showAlertAfterRecording("Memory warning", messageText: "Continuing measurements may result in loss of data or crashing the app. What do you want to do?", showContinueOption: false)
     }
     
     
@@ -64,18 +62,9 @@ class TremorViewController: UIViewController {
         if motionManager.accelerometerAvailable {
             
             let queue = NSOperationQueue()
-            
-            motionManager.startDeviceMotionUpdatesToQueue(queue, 
-            /*motionManager.startDeviceMotionUpdatesUsingReferenceFrame(CMAttitudeReferenceFrame.XMagneticNorthZVertical, toQueue: queue,*/
+            motionManager.startDeviceMotionUpdatesToQueue(queue,
                 withHandler: { (motion: CMDeviceMotion?, error: NSError?) in
                     self.collectTremorSamples(motion, error: error)
-
-                // Use code below if interaction with UI is required 
-                // (UI code needs to run on main thread)
-                /* dispatch_sync(dispatch_get_main_queue()) {
-                    self.collectTremorSamples(motion, error: error)
-                } */
-                
             })
             
         } else {
@@ -101,9 +90,46 @@ class TremorViewController: UIViewController {
             startStopButton.setTitle("Record", forState: .Normal)
             samplingStarted = false
             recordingIndicator.stopAnimating()
-            showNotificationAfterRecording("Question", messageText: "What do you want to do?")
+            showAlertAfterRecording("Question", messageText: "What do you want to do?", showContinueOption: true)
         }
         
+    }
+    
+    
+    // MARK:- Apple Watch connection
+    
+    
+    private func setupConnectivity() {
+        
+        if WCSession.isSupported() {
+            let session = WCSession.defaultSession()
+            session.delegate = self
+            session.activateSession()
+            print("WCSession is supported")
+            
+            if !session.paired {
+                print("Apple Watch is not paired")
+            }
+            
+            if !session.watchAppInstalled {
+                print("Apple Watch app is not installed")
+            }
+        } else {
+            print("Apple Watch connectivity is not supported on this device")
+        }
+    }
+    
+    
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
+        
+        tremorSamples = message["data"] as! [TremorSample]
+        
+        dispatch_async(dispatch_get_main_queue() ) {
+            self.showAlertAfterRecording("Watch Data received", messageText: "Tremor samples received from Apple Watch. What do you want to do?", showContinueOption: false)
+        }
+        
+        let replyValues = ["status": "Data sent!"]
+        replyHandler(replyValues)
     }
     
     
@@ -134,14 +160,6 @@ class TremorViewController: UIViewController {
         let gravX = CGFloat(gravity.x)
         let gravY = CGFloat(gravity.y)
         let gravZ = CGFloat(gravity.z)
-        
-//        let magneticField: CMCalibratedMagneticField = motion.magneticField
-//        let magX = magneticField.field.x
-//        let magY = magneticField.field.y
-//        let magZ = magneticField.field.z
-//        
-//        let magneticFieldCalibrationAccuracy: CMMagneticFieldCalibrationAccuracy = magneticField.accuracy
-//        let magneticFieldCalibrationAccuracyValue = magneticFieldCalibrationAccuracy.value
         
         let timeStamp = motion.timestamp
         let timeStampSince2001 = timeIntervalAtLastBoot + timeStamp
@@ -222,10 +240,10 @@ class TremorViewController: UIViewController {
     }
     
     
-    // MARK: - Notifications
+    // MARK: - Alerts
     
     
-    func showNotificationForResearchOnly() {
+    func showAlertForResearchOnly() {
         let warningMessage = "This tool is only meant for research and not for direct patient treatment."
         let warningController = UIAlertController(title: "Warning", message: warningMessage, preferredStyle: UIAlertControllerStyle.Alert)
         let confirmAction = UIAlertAction(title: "I understand", style: UIAlertActionStyle.Default, handler: nil)
@@ -236,14 +254,16 @@ class TremorViewController: UIViewController {
     }
     
     
-    func showNotificationAfterRecording(titleText: String, messageText: String) {
+    func showAlertAfterRecording(titleText: String, messageText: String, showContinueOption: Bool) {
         
         let controller = UIAlertController(title: titleText, message: messageText, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         let continueAction = UIAlertAction(title: "Continue measurements", style: UIAlertActionStyle.Default) { (action) -> Void in
             self.startStopSampling(self)
         }
-        controller.addAction(continueAction)
+        if showContinueOption {
+            controller.addAction(continueAction)
+        }
         
         let exportAction = UIAlertAction(title: "Export data", style: UIAlertActionStyle.Default) { (action) -> Void in
             self.exportSamples(self)

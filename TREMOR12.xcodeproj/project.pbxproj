@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F5A6AECD1C3BEC1900FE87E7 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5A6AECB1C3BEC1900FE87E7 /* Interface.storyboard */; };
+		F5A6AECF1C3BEC1900FE87E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A6AECE1C3BEC1900FE87E7 /* Assets.xcassets */; };
+		F5A6AED61C3BEC1900FE87E7 /* TREMOR12W Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F5A6AED51C3BEC1900FE87E7 /* TREMOR12W Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F5A6AEDB1C3BEC1900FE87E7 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A6AEDA1C3BEC1900FE87E7 /* InterfaceController.swift */; };
+		F5A6AEDD1C3BEC1900FE87E7 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A6AEDC1C3BEC1900FE87E7 /* ExtensionDelegate.swift */; };
+		F5A6AEDF1C3BEC1900FE87E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A6AEDE1C3BEC1900FE87E7 /* Assets.xcassets */; };
+		F5A6AEE31C3BEC1900FE87E7 /* TREMOR12W.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = F5A6AEC91C3BEC1900FE87E7 /* TREMOR12W.app */; };
+		F5A6AEED1C3BED6D00FE87E7 /* TremorSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F13C351B19D2E7009460C1 /* TremorSample.swift */; };
 		F5F13C141B19D2BE009460C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F13C131B19D2BE009460C1 /* AppDelegate.swift */; };
 		F5F13C1E1B19D2BE009460C1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5F13C1C1B19D2BE009460C1 /* LaunchScreen.xib */; };
 		F5F13C2A1B19D2BE009460C1 /* TREMOR12Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F13C291B19D2BE009460C1 /* TREMOR12Tests.swift */; };
@@ -18,6 +26,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F5A6AED71C3BEC1900FE87E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5F13C061B19D2BE009460C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5A6AED41C3BEC1900FE87E7;
+			remoteInfo = "TREMOR12W Extension";
+		};
+		F5A6AEE11C3BEC1900FE87E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5F13C061B19D2BE009460C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5A6AEC81C3BEC1900FE87E7;
+			remoteInfo = TREMOR12W;
+		};
 		F5F13C241B19D2BE009460C1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F5F13C061B19D2BE009460C1 /* Project object */;
@@ -27,7 +49,41 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F5A6AEE71C3BEC1900FE87E7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F5A6AED61C3BEC1900FE87E7 /* TREMOR12W Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5A6AEEB1C3BEC1900FE87E7 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				F5A6AEE31C3BEC1900FE87E7 /* TREMOR12W.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		F5A6AEC91C3BEC1900FE87E7 /* TREMOR12W.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TREMOR12W.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5A6AECC1C3BEC1900FE87E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		F5A6AECE1C3BEC1900FE87E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F5A6AED01C3BEC1900FE87E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5A6AED51C3BEC1900FE87E7 /* TREMOR12W Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TREMOR12W Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5A6AEDA1C3BEC1900FE87E7 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		F5A6AEDC1C3BEC1900FE87E7 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		F5A6AEDE1C3BEC1900FE87E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F5A6AEE01C3BEC1900FE87E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5F13C0E1B19D2BE009460C1 /* TREMOR12.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TREMOR12.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5F13C121B19D2BE009460C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5F13C131B19D2BE009460C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -37,12 +93,19 @@
 		F5F13C291B19D2BE009460C1 /* TREMOR12Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TREMOR12Tests.swift; sourceTree = "<group>"; };
 		F5F13C331B19D2E7009460C1 /* TremorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TremorViewController.swift; sourceTree = "<group>"; };
 		F5F13C341B19D2E7009460C1 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		F5F13C351B19D2E7009460C1 /* TremorSample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TremorSample.swift; sourceTree = "<group>"; };
+		F5F13C351B19D2E7009460C1 /* TremorSample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TremorSample.swift; path = TREMOR12/TremorSample.swift; sourceTree = "<group>"; };
 		F5F13C361B19D2E7009460C1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F5F13C3B1B19D307009460C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F5A6AED21C3BEC1900FE87E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5F13C0B1B19D2BE009460C1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -60,10 +123,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F5A6AECA1C3BEC1900FE87E7 /* TREMOR12W */ = {
+			isa = PBXGroup;
+			children = (
+				F5A6AECB1C3BEC1900FE87E7 /* Interface.storyboard */,
+				F5A6AEEF1C3BED9800FE87E7 /* Other */,
+			);
+			path = TREMOR12W;
+			sourceTree = "<group>";
+		};
+		F5A6AED91C3BEC1900FE87E7 /* TREMOR12W Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F5A6AEDA1C3BEC1900FE87E7 /* InterfaceController.swift */,
+				F5A6AEDC1C3BEC1900FE87E7 /* ExtensionDelegate.swift */,
+				F5A6AEF01C3BEDA500FE87E7 /* Other */,
+			);
+			path = "TREMOR12W Extension";
+			sourceTree = "<group>";
+		};
+		F5A6AEEC1C3BED6200FE87E7 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				F5F13C351B19D2E7009460C1 /* TremorSample.swift */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		F5A6AEEE1C3BED8F00FE87E7 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				F5F13C131B19D2BE009460C1 /* AppDelegate.swift */,
+				F5F13C3B1B19D307009460C1 /* Images.xcassets */,
+				F5F13C1C1B19D2BE009460C1 /* LaunchScreen.xib */,
+				F5F13C121B19D2BE009460C1 /* Info.plist */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		F5A6AEEF1C3BED9800FE87E7 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				F5A6AECE1C3BEC1900FE87E7 /* Assets.xcassets */,
+				F5A6AED01C3BEC1900FE87E7 /* Info.plist */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		F5A6AEF01C3BEDA500FE87E7 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				F5A6AEDE1C3BEC1900FE87E7 /* Assets.xcassets */,
+				F5A6AEE01C3BEC1900FE87E7 /* Info.plist */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
 		F5F13C051B19D2BE009460C1 = {
 			isa = PBXGroup;
 			children = (
+				F5A6AEEC1C3BED6200FE87E7 /* Shared */,
 				F5F13C101B19D2BE009460C1 /* TREMOR12 */,
+				F5A6AECA1C3BEC1900FE87E7 /* TREMOR12W */,
+				F5A6AED91C3BEC1900FE87E7 /* TREMOR12W Extension */,
 				F5F13C261B19D2BE009460C1 /* TREMOR12Tests */,
 				F5F13C0F1B19D2BE009460C1 /* Products */,
 			);
@@ -74,6 +196,8 @@
 			children = (
 				F5F13C0E1B19D2BE009460C1 /* TREMOR12.app */,
 				F5F13C231B19D2BE009460C1 /* TREMOR12Tests.xctest */,
+				F5A6AEC91C3BEC1900FE87E7 /* TREMOR12W.app */,
+				F5A6AED51C3BEC1900FE87E7 /* TREMOR12W Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,24 +205,12 @@
 		F5F13C101B19D2BE009460C1 /* TREMOR12 */ = {
 			isa = PBXGroup;
 			children = (
-				F5F13C131B19D2BE009460C1 /* AppDelegate.swift */,
 				F5F13C331B19D2E7009460C1 /* TremorViewController.swift */,
 				F5F13C341B19D2E7009460C1 /* InfoViewController.swift */,
-				F5F13C351B19D2E7009460C1 /* TremorSample.swift */,
-				F5F13C3B1B19D307009460C1 /* Images.xcassets */,
 				F5F13C361B19D2E7009460C1 /* Main.storyboard */,
-				F5F13C1C1B19D2BE009460C1 /* LaunchScreen.xib */,
-				F5F13C111B19D2BE009460C1 /* Supporting Files */,
+				F5A6AEEE1C3BED8F00FE87E7 /* Other */,
 			);
 			path = TREMOR12;
-			sourceTree = "<group>";
-		};
-		F5F13C111B19D2BE009460C1 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F5F13C121B19D2BE009460C1 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		F5F13C261B19D2BE009460C1 /* TREMOR12Tests */ = {
@@ -121,6 +233,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F5A6AEC81C3BEC1900FE87E7 /* TREMOR12W */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5A6AEE81C3BEC1900FE87E7 /* Build configuration list for PBXNativeTarget "TREMOR12W" */;
+			buildPhases = (
+				F5A6AEC71C3BEC1900FE87E7 /* Resources */,
+				F5A6AEE71C3BEC1900FE87E7 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F5A6AED81C3BEC1900FE87E7 /* PBXTargetDependency */,
+			);
+			name = TREMOR12W;
+			productName = TREMOR12W;
+			productReference = F5A6AEC91C3BEC1900FE87E7 /* TREMOR12W.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		F5A6AED41C3BEC1900FE87E7 /* TREMOR12W Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5A6AEE41C3BEC1900FE87E7 /* Build configuration list for PBXNativeTarget "TREMOR12W Extension" */;
+			buildPhases = (
+				F5A6AED11C3BEC1900FE87E7 /* Sources */,
+				F5A6AED21C3BEC1900FE87E7 /* Frameworks */,
+				F5A6AED31C3BEC1900FE87E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TREMOR12W Extension";
+			productName = "TREMOR12W Extension";
+			productReference = F5A6AED51C3BEC1900FE87E7 /* TREMOR12W Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 		F5F13C0D1B19D2BE009460C1 /* TREMOR12 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5F13C2D1B19D2BE009460C1 /* Build configuration list for PBXNativeTarget "TREMOR12" */;
@@ -128,10 +274,12 @@
 				F5F13C0A1B19D2BE009460C1 /* Sources */,
 				F5F13C0B1B19D2BE009460C1 /* Frameworks */,
 				F5F13C0C1B19D2BE009460C1 /* Resources */,
+				F5A6AEEB1C3BEC1900FE87E7 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F5A6AEE21C3BEC1900FE87E7 /* PBXTargetDependency */,
 			);
 			name = TREMOR12;
 			productName = TREMOR12;
@@ -163,10 +311,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0710;
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = DigitalNeurosurgeon.com;
 				TargetAttributes = {
+					F5A6AEC81C3BEC1900FE87E7 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = XJW89ZK9NM;
+					};
+					F5A6AED41C3BEC1900FE87E7 = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					F5F13C0D1B19D2BE009460C1 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = XJW89ZK9NM;
@@ -192,11 +347,30 @@
 			targets = (
 				F5F13C0D1B19D2BE009460C1 /* TREMOR12 */,
 				F5F13C221B19D2BE009460C1 /* TREMOR12Tests */,
+				F5A6AEC81C3BEC1900FE87E7 /* TREMOR12W */,
+				F5A6AED41C3BEC1900FE87E7 /* TREMOR12W Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F5A6AEC71C3BEC1900FE87E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5A6AECF1C3BEC1900FE87E7 /* Assets.xcassets in Resources */,
+				F5A6AECD1C3BEC1900FE87E7 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5A6AED31C3BEC1900FE87E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5A6AEDF1C3BEC1900FE87E7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5F13C0C1B19D2BE009460C1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,6 +391,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F5A6AED11C3BEC1900FE87E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5A6AEED1C3BED6D00FE87E7 /* TremorSample.swift in Sources */,
+				F5A6AEDD1C3BEC1900FE87E7 /* ExtensionDelegate.swift in Sources */,
+				F5A6AEDB1C3BEC1900FE87E7 /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5F13C0A1B19D2BE009460C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,6 +423,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F5A6AED81C3BEC1900FE87E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5A6AED41C3BEC1900FE87E7 /* TREMOR12W Extension */;
+			targetProxy = F5A6AED71C3BEC1900FE87E7 /* PBXContainerItemProxy */;
+		};
+		F5A6AEE21C3BEC1900FE87E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5A6AEC81C3BEC1900FE87E7 /* TREMOR12W */;
+			targetProxy = F5A6AEE11C3BEC1900FE87E7 /* PBXContainerItemProxy */;
+		};
 		F5F13C251B19D2BE009460C1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F5F13C0D1B19D2BE009460C1 /* TREMOR12 */;
@@ -247,6 +441,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		F5A6AECB1C3BEC1900FE87E7 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5A6AECC1C3BEC1900FE87E7 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 		F5F13C1C1B19D2BE009460C1 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -258,6 +460,70 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F5A6AEE51C3BEC1900FE87E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "TREMOR12W Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = eu.dign.TREMOR12.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		F5A6AEE61C3BEC1900FE87E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "TREMOR12W Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = eu.dign.TREMOR12.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
+		F5A6AEE91C3BEC1900FE87E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = TREMOR12W_Extension;
+				INFOPLIST_FILE = TREMOR12W/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.dign.TREMOR12.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		F5A6AEEA1C3BEC1900FE87E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				IBSC_MODULE = TREMOR12W_Extension;
+				INFOPLIST_FILE = TREMOR12W/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.dign.TREMOR12.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
 		F5F13C2B1B19D2BE009460C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -346,10 +612,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TREMOR12/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "eu.dign.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = eu.dign.TREMOR12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7a9eec08-cc9b-47be-854b-a954756d9e65";
 			};
 			name = Debug;
 		};
@@ -359,10 +626,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TREMOR12/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "eu.dign.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = eu.dign.TREMOR12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7a9eec08-cc9b-47be-854b-a954756d9e65";
 			};
 			name = Release;
 		};
@@ -399,6 +667,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F5A6AEE41C3BEC1900FE87E7 /* Build configuration list for PBXNativeTarget "TREMOR12W Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5A6AEE51C3BEC1900FE87E7 /* Debug */,
+				F5A6AEE61C3BEC1900FE87E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F5A6AEE81C3BEC1900FE87E7 /* Build configuration list for PBXNativeTarget "TREMOR12W" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5A6AEE91C3BEC1900FE87E7 /* Debug */,
+				F5A6AEEA1C3BEC1900FE87E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		F5F13C091B19D2BE009460C1 /* Build configuration list for PBXProject "TREMOR12" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
