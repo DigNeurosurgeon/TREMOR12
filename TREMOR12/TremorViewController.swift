@@ -18,6 +18,7 @@ class TremorViewController: UIViewController, WCSessionDelegate {
 
     lazy var motionManager = CMMotionManager()
     lazy var tremorSamples = [TremorSample]()
+    lazy var watchSamples = [WatchSample]()
     var timeIntervalAtLastBoot = NSTimeInterval()
     var samplingStarted = false
     var notificationForResearchOnlyPresented = false
@@ -37,11 +38,11 @@ class TremorViewController: UIViewController, WCSessionDelegate {
     }
 
     
-    override func viewDidAppear(animated: Bool) {
-        if !notificationForResearchOnlyPresented {
-            showAlertForResearchOnly()
-        }
-    }
+//    override func viewDidAppear(animated: Bool) {
+//        if !notificationForResearchOnlyPresented {
+//            showAlertForResearchOnly()
+//        }
+//    }
     
     
     override func viewWillDisappear(animated: Bool) {
@@ -51,7 +52,7 @@ class TremorViewController: UIViewController, WCSessionDelegate {
     
     override func didReceiveMemoryWarning() {
         startStopSampling(self)
-        showAlertAfterRecording("Memory warning", messageText: "Continuing measurements may result in loss of data or crashing the app. What do you want to do?", showContinueOption: false)
+        showAlertAfterRecording("Memory warning", messageText: "Continuing measurements may result in loss of data or crashing the app. What do you want to do?", showContinueOption: false, useWatchSamples: false)
     }
     
     
@@ -90,7 +91,7 @@ class TremorViewController: UIViewController, WCSessionDelegate {
             startStopButton.setTitle("Record", forState: .Normal)
             samplingStarted = false
             recordingIndicator.stopAnimating()
-            showAlertAfterRecording("Question", messageText: "What do you want to do?", showContinueOption: true)
+            showAlertAfterRecording("Question", messageText: "What do you want to do?", showContinueOption: true, useWatchSamples: false)
         }
         
     }
@@ -122,13 +123,35 @@ class TremorViewController: UIViewController, WCSessionDelegate {
     
     func session(session: WCSession, didReceiveMessage message: [String : AnyObject], replyHandler: ([String : AnyObject]) -> Void) {
         
-        tremorSamples = message["data"] as! [TremorSample]
+        let receivedWatchSamples = message as! [String: [Double]]
+        let accX = receivedWatchSamples["accX"]
+        let accY = receivedWatchSamples["accY"]
+        let accZ = receivedWatchSamples["accZ"]
+        let sampleCount = accX!.count // TODO: make independent of one single variable
+        
+        for i in 0..<sampleCount {
+            let watchSample = WatchSample(accX: accX![i], accY: accY![i], accZ: accZ![i])
+            watchSamples.append(watchSample)
+        }
+
+        let sampleMessageText = "Received \(sampleCount) samples from watch. What do you want to do?"
+        var replyText = ""
         
         dispatch_async(dispatch_get_main_queue() ) {
-            self.showAlertAfterRecording("Watch Data received", messageText: "Tremor samples received from Apple Watch. What do you want to do?", showContinueOption: false)
+        
+            if self.watchSamples.count > 0 {
+                replyText = "Data sent!"
+                self.showAlertAfterRecording("Watch Data received", messageText: sampleMessageText, showContinueOption: false, useWatchSamples: true)
+            } else {
+                replyText = "Error sending data"
+                let alertController = UIAlertController(title: "No data received", message: "Tremor samples could not be loaded from Apple Watch", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
         }
         
-        let replyValues = ["status": "Data sent!"]
+        let replyValues = ["status": replyText]
         replyHandler(replyValues)
     }
     
@@ -190,7 +213,7 @@ class TremorViewController: UIViewController, WCSessionDelegate {
     // MARK: - Export data
     
     
-    func csvFileWithPath() -> NSURL? {
+    func csvFileWithPath(useWatchSamples: Bool) -> NSURL? {
         // Create date string from local timezone for filename
         let date = NSDate()
         let dateFormatter = NSDateFormatter()
@@ -199,13 +222,24 @@ class TremorViewController: UIViewController, WCSessionDelegate {
         let localDateForFileName = dateFormatter.stringFromDate(date)
         
         // Create CSV file with output
-        var csvString = "timestamp2001_ms,roll,pitch,yaw,rotX,rotY,rotZ,accX,accY,accZ,gravX,gravY,gravZ\n"
-        for sample in tremorSamples {
-            csvString += sample.exportAsCommaSeparatedValues()
+        var csvString = ""
+        if useWatchSamples {
+            csvString = "accX,accY,accZ\n"
+            for sample in watchSamples {
+                csvString += sample.exportAsCommaSeparatedValues()
+            }
+        } else {
+            csvString = "timestamp2001_ms,roll,pitch,yaw,rotX,rotY,rotZ,accX,accY,accZ,gravX,gravY,gravZ\n"
+            for sample in tremorSamples {
+                csvString += sample.exportAsCommaSeparatedValues()
+            }
         }
+        
+        
         let dirPaths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let docsDir = dirPaths[0]
-        let csvFileName = "TREMOR12_samples_\(localDateForFileName).csv"
+        let csvFileNamePrefix = useWatchSamples ? "TREMOR12W" : "TREMOR12"
+        let csvFileName = "\(csvFileNamePrefix)_samples_\(localDateForFileName).csv"
         let csvFilePath = docsDir.stringByAppendingString("/" + csvFileName)
         
         // Generate output
@@ -221,9 +255,9 @@ class TremorViewController: UIViewController, WCSessionDelegate {
     }
     
     
-    @IBAction func exportSamples(sender: AnyObject) {
+    @IBAction func exportSamples(useWatchSamples: Bool) {
         // Export content if possible, else show alert
-        if let content = csvFileWithPath() {
+        if let content = csvFileWithPath(useWatchSamples) {
             let activityViewController = UIActivityViewController(activityItems: [content], applicationActivities: nil)
             if activityViewController.respondsToSelector("popoverPresentationController") {
                 activityViewController.popoverPresentationController?.sourceView = self.view
@@ -254,7 +288,7 @@ class TremorViewController: UIViewController, WCSessionDelegate {
     }
     
     
-    func showAlertAfterRecording(titleText: String, messageText: String, showContinueOption: Bool) {
+    func showAlertAfterRecording(titleText: String, messageText: String, showContinueOption: Bool, useWatchSamples: Bool) {
         
         let controller = UIAlertController(title: titleText, message: messageText, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
@@ -266,7 +300,7 @@ class TremorViewController: UIViewController, WCSessionDelegate {
         }
         
         let exportAction = UIAlertAction(title: "Export data", style: UIAlertActionStyle.Default) { (action) -> Void in
-            self.exportSamples(self)
+            self.exportSamples(useWatchSamples)
         }
         controller.addAction(exportAction)
         

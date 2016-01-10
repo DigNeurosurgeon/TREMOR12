@@ -17,7 +17,7 @@
                                 <action selector="onRecord" destination="AgC-eL-Hgc" id="fmz-5o-YUW"/>
                             </connections>
                         </button>
-                        <label alignment="center" verticalAlignment="bottom" text="statusLabel" id="pa2-96-K8h"/>
+                        <label alignment="center" verticalAlignment="bottom" text="statusLabel" numberOfLines="0" id="pa2-96-K8h"/>
                     </items>
                     <connections>
                         <outlet property="recordButton" destination="DFk-Aq-liu" id="CMy-q1-Gbt"/>
